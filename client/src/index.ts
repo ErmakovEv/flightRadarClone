@@ -1,8 +1,5 @@
-type Book = {
-  author: string;
-};
-const book: Book = {
-  author: 'John Doe',
-};
+import App from './app/app';
+// import '../styles/main.scss';
 
-// console.log(book);
+const app = new App();
+app.run();
