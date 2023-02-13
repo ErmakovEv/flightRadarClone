@@ -1,7 +1,15 @@
 import sequelize from '../db';
-import { DataTypes } from 'sequelize';
+import { Model, CreationOptional, InferAttributes, InferCreationAttributes, DataTypes } from 'sequelize';
 
-export const User = sequelize.define('user', {
+interface UserModel extends Model<InferAttributes<UserModel>, InferCreationAttributes<UserModel>> {
+  // Some fields are optional when calling UserModel.create() or UserModel.build()
+  id: CreationOptional<number>;
+  email: CreationOptional<string>;
+  password: CreationOptional<string>;
+  role: CreationOptional<string>;
+}
+
+export const User = sequelize.define<UserModel>('user', {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
   email: { type: DataTypes.STRING, unique: true },
   password: { type: DataTypes.STRING },

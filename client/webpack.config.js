@@ -10,6 +10,7 @@ const stylesHandler = isProduction
 
 const config = {
   entry: './src/index.ts',
+  devtool: 'source-map',
   output: {
     path: path.resolve(__dirname, 'dist'),
   },

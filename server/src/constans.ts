@@ -5,4 +5,5 @@ export default {
   DB_PASS: '2109',
   DB_HOST: 'localhost',
   DB_PORT: 5432,
-}
+  SECRET_KEY: 'qwerty',
+};
