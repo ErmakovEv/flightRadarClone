@@ -1,6 +1,6 @@
 import express = require('express');
 import bcrypt = require('bcrypt');
-import { User, Basket } from '../models/models';
+import { User, Setting } from '../models/models';
 import jwt = require('jsonwebtoken');
 import constans from '../constans';
 
@@ -23,13 +23,14 @@ class UserController {
       }
       const hashPass = await bcrypt.hash(password, 5);
       const user = await User.create({ email, role, password: hashPass });
-      const basket = await Basket.create({ userId: user.id });
+      const setting = await Setting.create({ userId: user.id });
       const token = generateJwt(user.id, user.email, user.role);
       return res.status(200).json({ 'Пользователь успешно зарегистрирован': token });
     } catch (error) {
       console.log(error);
     }
   }
+
   async login(req: express.Request, res: express.Response) {
     try {
       const { email, password } = req.body;
@@ -47,6 +48,7 @@ class UserController {
       console.log(error);
     }
   }
+
   async check(req: express.Request, res: express.Response) {
     const { user } = req.body;
     const token = generateJwt(user.id, user.email, user.role);
