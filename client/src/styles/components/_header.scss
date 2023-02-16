@@ -1,0 +1,29 @@
+.header {
+  height: 70px;
+  background-color: $color-background;
+
+  .header__nav {
+    position: absolute;
+    left: 150px;
+    top: 20px;
+  }
+  .header__item:hover .header__item:active,
+  .header__item {
+    text-decoration: none;
+    padding-left: 50px;
+    font-family: 'Roboto';
+    font-size: 20px;
+    color: $color-icon-active;
+  }
+
+  .header__item:hover {
+    color: $color-submit-active;
+  }
+
+  .header__logout {
+    position: absolute;
+    top: 17px;
+    right: 10px;
+    padding: 10px;
+  }
+}

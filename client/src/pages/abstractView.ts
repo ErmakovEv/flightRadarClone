@@ -8,6 +8,8 @@ export default class AbstractView {
   constructor(id: string, controller: Controller) {
     this.controller = controller;
     this.container = document.createElement('div');
+    this.container.classList.add(`container-${id}`);
+    this.container.id = id;
     this.setTitle();
   }
 

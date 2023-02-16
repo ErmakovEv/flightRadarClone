@@ -1,13 +1,16 @@
+import Header from '../components/header';
+
 export default class Window {
   private container: HTMLElement = document.body;
-  private header: HTMLElement;
+  private header: Header;
 
-  constructor(header: HTMLElement) {
-    this.header = header;
+  constructor() {
+    this.header = new Header();
   }
 
-  render(page: HTMLElement) {
+  render(pageHTML: HTMLElement, routes: string[]) {
     this.container.innerHTML = '';
-    this.container.append(this.header, page);
+    this.container.append(this.header.render(routes));
+    this.container.append(pageHTML);
   }
 }

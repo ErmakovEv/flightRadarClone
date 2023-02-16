@@ -1,11 +1,13 @@
 {
   "compilerOptions": {
     "allowSyntheticDefaultImports": true,
+    "moduleResolution": "node",
     "noImplicitAny": true,
-    "module": "es6",
+    "module": "ES6",
+    "declaration": true,
     "target": "es5",
     "allowJs": true,
     "sourceMap": true
   },
-  "files": ["src/index.ts"]
+  "files": ["src/index.ts", "./module.d.ts"]
 }
