@@ -1,5 +1,6 @@
 import AbstractView from './abstractView';
 import Controller from '../controller/controller';
+import mapTypes from '../types/mapTypes';
 
 import L from 'leaflet';
 import 'leaflet-rotatedmarker';
@@ -10,21 +11,15 @@ export default class Map extends AbstractView {
     this.createMap();
   }
 
-  createMap() {
-    setTimeout(() => {
-      const map = L.map('map').setView(
-        [59.93413595579978, 30.340987379107066],
-        8,
-      );
-      const osm = L.tileLayer(
-        'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-        {
-          attribution:
-            '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-        },
-      );
+  async createMap() {
+    const mapType = await this.controller.settingHandler();
 
-      osm.addTo(map);
-    }, 100);
+    const map = L.map('map').setView(
+      [59.93413595579978, 30.340987379107066],
+      8,
+    );
+    const osm = L.tileLayer(mapTypes[mapType][0], mapTypes[mapType][1]);
+
+    osm.addTo(map);
   }
 }

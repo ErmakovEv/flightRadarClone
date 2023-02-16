@@ -1,0 +1,113 @@
+.table {
+  margin-top: 20px;
+  table-layout: fixed;
+  width: 100%;
+  border-collapse: collapse;
+
+  font-family: roboto;
+  font-size: 20px;
+  text-align: center;
+
+  th,
+  td {
+    padding: 20px;
+  }
+}
+
+.switch {
+  display: inline-block;
+  position: relative;
+  // left: 50px;
+  // padding: 10px;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.switch input {
+  opacity: 0;
+  position: absolute;
+}
+
+.switch input + span {
+  position: relative;
+  display: inline-block;
+  width: 1.65em;
+  height: 1em;
+  background: white;
+  box-shadow: inset 0 0 0 0.0625em #e9e9e9;
+  border-radius: 0.5em;
+  vertical-align: -0.15em;
+  transition: all 0.4s cubic-bezier(0.17, 0.67, 0.43, 0.98);
+}
+
+.switch:active input + span,
+.switch input + span:active {
+  box-shadow: inset 0 0 0 0.73em #e9e9e9;
+}
+
+.switch input + span:after {
+  position: absolute;
+  display: block;
+  content: '';
+  width: 0.875em;
+  height: 0.875em;
+  border-radius: 0.4375em;
+  top: 0.0625em;
+  left: 0.0625em;
+  background: white;
+  box-shadow: inset 0 0 0 0.03em rgba(0, 0, 0, 0.1),
+    0 0 0.05em rgba(0, 0, 0, 0.05), 0 0.1em 0.2em rgba(0, 0, 0, 0.2);
+  transition: all 0.25s ease-out;
+}
+
+.switch:active input + span:after,
+.switch input + span:active:after {
+  width: 1.15em;
+}
+
+.switch input:checked + span {
+  box-shadow: inset 0 0 0 0.73em #4cd964;
+}
+
+.switch input:checked + span:after {
+  left: 0.7125em;
+}
+
+.switch:active input:checked + span:after,
+.switch input:checked + span:active:after {
+  left: 0.4375em;
+}
+
+/* accessibility styles */
+.switch input:focus + span:after {
+  box-shadow: inset 0 0 0 0.03em rgba(0, 0, 0, 0.15),
+    0 0 0.05em rgba(0, 0, 0, 0.08), 0 0.1em 0.2em rgba(0, 0, 0, 0.3);
+  background: #fff;
+}
+
+.switch input:focus + span {
+  box-shadow: inset 0 0 0 0.0625em #dadada;
+}
+
+.switch input:focus:checked + span {
+  box-shadow: inset 0 0 0 0.73em #33be4b;
+}
+
+/* reset accessibility style on hover */
+.switch:hover input:focus + span:after {
+  box-shadow: inset 0 0 0 0.03em rgba(0, 0, 0, 0.1),
+    0 0 0.05em rgba(0, 0, 0, 0.05), 0 0.1em 0.2em rgba(0, 0, 0, 0.2);
+  background: #fff;
+}
+
+.switch:hover input:focus + span {
+  box-shadow: inset 0 0 0 0.0625em #e9e9e9;
+}
+
+.switch:hover input:focus:checked + span {
+  box-shadow: inset 0 0 0 0.73em #4cd964;
+}

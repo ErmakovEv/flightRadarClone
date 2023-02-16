@@ -5,6 +5,7 @@ import Settings from '../pages/settingsView';
 import Login from '../pages/LoginView';
 import Admin from '../pages/adminView';
 import userApi from '../api/userAPI';
+
 import jwt_decode from 'jwt-decode';
 import IJWTDecoded from '../types/jwtDecoded';
 import { userType } from '../types/userType';
@@ -18,11 +19,21 @@ class Controller {
   constructor() {
     const token = localStorage.getItem('token');
     let role: userType = 'DEFAULT';
+    let id = 0;
     if (token) {
       role = jwt_decode<IJWTDecoded>(token).role as userType;
+      id = jwt_decode<IJWTDecoded>(token).id;
     }
-    this.model = new Model(role);
+    this.model = new Model(role, id);
     this.routes = this.setRoutes();
+  }
+
+  async settingHandler() {
+    return await this.model.getSetting();
+  }
+
+  async settingToggle() {
+    await this.model.toggleMapType();
   }
 
   async loginHandler(email: string, password: string) {
@@ -31,10 +42,10 @@ class Controller {
       localStorage.setItem('token', rawData['token']);
       if (rawData['token']) {
         const decodedData = jwt_decode<IJWTDecoded>(rawData['token']);
-        this.model.setUser(decodedData.role as userType);
+        this.model.setUser(decodedData.id, decodedData.role as userType);
         this.routes = this.setRoutes();
         let path: string;
-        if (this.model.getUser() === 'ADMIN') {
+        if (this.model.getUserRole() === 'ADMIN') {
           path = 'admin';
         } else {
           path = 'map';
@@ -57,7 +68,7 @@ class Controller {
   }
 
   setRoutes() {
-    const user = this.model.getUser();
+    const user = this.model.getUserRole();
     if (user === 'DEFAULT') {
       return [{ path: '', view: Login, subPage: 0 }];
     }
