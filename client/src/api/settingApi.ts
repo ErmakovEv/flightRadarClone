@@ -3,11 +3,12 @@ import { Api } from './api';
 class settingApi extends Api {
   private path = '/setting';
 
-  set(id: number, mapType: number) {
+  set(id: number, mapType: number, pos: string) {
     return this.request(this.path + '/' + id, {
       method: 'POST',
       data: {
         mapType: mapType,
+        pos: pos,
       },
     });
   }

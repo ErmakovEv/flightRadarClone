@@ -32,6 +32,10 @@ class Controller {
     return await this.model.getSetting();
   }
 
+  async positionHandler(position: string) {
+    await this.model.setPosition(position);
+  }
+
   async settingToggle() {
     await this.model.toggleMapType();
   }

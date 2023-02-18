@@ -7,6 +7,7 @@ class Model {
   private userRole: userType;
   private userId: number;
   private mapType: number;
+  private position: string;
 
   constructor(role: userType, id: number) {
     this.userRole = role;
@@ -25,13 +26,24 @@ class Model {
 
   async toggleMapType() {
     this.mapType = +!this.mapType;
-    settingApi.set(this.userId, this.mapType);
+    settingApi.set(this.userId, this.mapType, this.position);
+  }
+
+  async setPosition(airport: string) {
+    this.position = airport;
+    settingApi.set(this.userId, this.mapType, this.position);
   }
 
   async getSetting() {
     const data = await this.settingApi.getOne(this.userId);
+    console.log(data);
     this.mapType = data['mapType'];
-    return this.mapType;
+    this.position = data['geoPos'];
+    const ans = {
+      mapType: this.mapType,
+      position: this.position,
+    };
+    return ans;
   }
 }
 

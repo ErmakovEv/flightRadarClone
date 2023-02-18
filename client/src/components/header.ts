@@ -1,12 +1,9 @@
-import svgIcon from './plane.svg';
-
 export default class Header {
   private container: HTMLElement;
 
   constructor() {
     this.container = document.createElement('header');
     this.container.classList.add('header');
-    console.log(1, svgIcon);
   }
 
   render(routes: string[]) {

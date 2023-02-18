@@ -1,9 +1,6 @@
 import AbstractView from './abstractView';
 import Controller from '../controller/controller';
-import mapTypes from '../types/mapTypes';
-
-import L from 'leaflet';
-import 'leaflet-rotatedmarker';
+import FlightCore from '../core/flightCore';
 
 export default class Map extends AbstractView {
   constructor(id: string, controller: Controller) {
@@ -12,14 +9,8 @@ export default class Map extends AbstractView {
   }
 
   async createMap() {
-    const mapType = await this.controller.settingHandler();
-
-    const map = L.map('map').setView(
-      [59.93413595579978, 30.340987379107066],
-      8,
-    );
-    const osm = L.tileLayer(mapTypes[mapType][0], mapTypes[mapType][1]);
-
-    osm.addTo(map);
+    const res = await this.controller.settingHandler();
+    const flight = new FlightCore(res.mapType, res.position);
+    flight.render();
   }
 }

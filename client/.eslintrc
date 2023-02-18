@@ -13,7 +13,7 @@
     "ecmaVersion": "latest",
     "sourceType": "module"
   },
-  "plugins": ["@typescript-eslint"]
+  "plugins": ["@typescript-eslint"],
   // "ignorePatterns": ["webapck.config.js"]
   // "rules": {
   //   "no-var": "error",
@@ -25,4 +25,7 @@
   //   "prefer-const": "error",
   //   "no-use-before-define": "error"
   // }
+  "rules": {
+    "@typescript-eslint/no-var-requires": 0
+  }
 }
