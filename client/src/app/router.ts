@@ -1,7 +1,8 @@
 import Controller from '../controller/controller';
+import RotesType from '../types/routeType';
 
 export default class Router {
-  private routes;
+  private routes: RotesType[];
   private controller: Controller;
 
   constructor() {

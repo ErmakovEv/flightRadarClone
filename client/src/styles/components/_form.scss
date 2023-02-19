@@ -1,0 +1,19 @@
+.input {
+  display: block;
+  margin: 10px;
+  padding: 10px;
+  border: 0;
+  box-shadow: 0 0 15px 4px rgba(0, 0, 0, 0.06);
+}
+.input-btn {
+  display: block;
+  margin: 10px;
+  padding: 10px;
+  background-color: $color-icon;
+  color: $color-icon-active;
+  width: 90%;
+}
+
+.input-btn:hover {
+  background-color: $color-submit-active;
+}

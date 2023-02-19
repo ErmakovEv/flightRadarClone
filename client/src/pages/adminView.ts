@@ -8,6 +8,11 @@ export default class AdminPanel extends AbstractView {
   }
 
   private createForm() {
+    const formContainer = document.createElement('div');
+    formContainer.classList.add('form-container');
+    const h2 = document.createElement('h4');
+    h2.classList.add('form-title');
+    h2.textContent = 'Форма добавления пользователя';
     const formLog = document.createElement('form');
     const inputName = document.createElement('input');
     inputName.classList.add('input');
@@ -39,6 +44,7 @@ export default class AdminPanel extends AbstractView {
         role.toString(),
       );
     };
-    return formLog;
+    formContainer.append(h2, formLog);
+    return formContainer;
   }
 }

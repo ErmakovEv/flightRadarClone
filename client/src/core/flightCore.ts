@@ -10,6 +10,8 @@ import 'leaflet-rotatedmarker';
 import planeSVG from '../img/airplane.svg';
 import planeSVGA from '../img/airplaneA.svg';
 
+import sleet from '../img/weather/sleet.svg';
+
 export default class FligtCore {
   private map: L.Map;
   private layer: L.Layer;
@@ -19,7 +21,7 @@ export default class FligtCore {
   private aircraftsView = new Map();
 
   constructor(mapType: number, position: string) {
-    this.map = L.map('map').setView(aerportMap.get(position), 10);
+    this.map = L.map('map').setView(aerportMap.get(position)['coord'], 10);
     this.layer = L.tileLayer(mapTypes[mapType][0], mapTypes[mapType][1]);
   }
 

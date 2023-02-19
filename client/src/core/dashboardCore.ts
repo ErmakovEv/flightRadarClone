@@ -1,4 +1,6 @@
 import aerportTypes from '../types/airportTypes';
+import sheduleTypes from '../types/sheduleType';
+import { iconsWeatherMap } from '../types/airportTypes';
 
 export default class DashboardCore {
   private airport: string;
@@ -9,9 +11,12 @@ export default class DashboardCore {
   async render() {
     //TODO
     const res_weather = await fetch(
-      `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/Moskow,RU?unitGroup=metric&key=GX2K34VB5NU5QGAF8Q83LJHRN&iconSet=icons1`,
+      `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${
+        aerportTypes.get(this.airport)['nameCity']
+      },RU?unitGroup=metric&key=GX2K34VB5NU5QGAF8Q83LJHRN&iconSet=icons1`,
     );
     const json_weather = await res_weather.json();
+    console.log(json_weather);
 
     const res_dep = await fetch(
       `https://airlabs.co/api/v9/schedules?dep_icao=${this.airport}&api_key=3aa3e916-64eb-43d6-9ba3-0dcb0c26a1bd`,
@@ -21,19 +26,18 @@ export default class DashboardCore {
     );
     const json_dep = await res_dep.json();
     const json_arr = await res_arr.json();
-    const shedule = document.createElement('div');
-    shedule.classList.add('shedule');
-    const htmlArrArray = json_arr['response'].map(item => {
+
+    const htmlArrArray = json_arr['response'].map((item: sheduleTypes) => {
       return `<tr>
       <td>${item.arr_time}</td>
       <td>${item.flight_icao} / ${item.flight_iata}</td>
-      <td>${item.arr_iata}</td>
+      <td>${item.dep_iata}</td>
       <td>${item.aircraft_icao}</td>
       <td>${item.status}</td>
     </tr>`;
     });
 
-    const htmlDepArray = json_dep['response'].map(item => {
+    const htmlDepArray = json_dep['response'].map((item: sheduleTypes) => {
       return `
       <tr>
       <td>${item.dep_time}</td>
@@ -45,18 +49,49 @@ export default class DashboardCore {
       `;
     });
 
-    const header = document.createElement('div'); // append shedule
+    const shedule = document.createElement('div');
+    shedule.classList.add('shedule');
+    const header = document.createElement('div');
     header.classList.add('shedule__header');
     const title = document.createElement('div');
     title.classList.add('shedule__title');
     const h2 = document.createElement('h2');
     h2.textContent = this.airport;
-    title.append(h2);
+    const h4 = document.createElement('h4');
+    h4.textContent =
+      aerportTypes.get(this.airport)['nameCity'] +
+      ', ' +
+      aerportTypes.get(this.airport)['nameAirport'];
+    title.append(h2, h4);
+
     const weather = document.createElement('div');
     weather.classList.add('shedule__weather');
-    const h3 = document.createElement('h3');
-    h3.textContent = json_weather['days'][0]['temp'];
-    weather.append(h3);
+    const weatherInfo = document.createElement('div');
+    weatherInfo.classList.add('shedule__weather-info');
+    const weatherImg = document.createElement('div');
+    weatherImg.classList.add('shedule__weather-img');
+    const hTemp = document.createElement('h3');
+    hTemp.textContent =
+      'temp: ' +
+      json_weather['days'][0]['temp'] +
+      ' pressure: ' +
+      json_weather['days'][0]['pressure'];
+    const hWind = document.createElement('h3');
+    hWind.textContent =
+      'wind speed: ' +
+      json_weather['days'][0]['windspeed'] +
+      ' wind dir:' +
+      json_weather['days'][0]['winddir'];
+
+    const iconWeather = document.createElement('img');
+    const iconName: string = json_weather['days'][0]['icon'];
+    if (iconName in iconsWeatherMap) {
+      iconWeather.src = iconsWeatherMap[iconName];
+    }
+    weatherInfo.append(hTemp, hWind);
+    weatherImg.append(iconWeather);
+    weather.append(weatherInfo, weatherImg);
+
     header.append(title, weather);
 
     const content = document.createElement('div');
@@ -133,58 +168,6 @@ export default class DashboardCore {
 
     shedule.append(header, content, footer);
 
-    //   shedule.innerHTML = `
-    // //   <div class="shedule__header">
-    // //     <div class="shedule__title">
-    // //       <h2>LED/ULLI</h2>
-    // //     </div>
-    // //     <div class="shedule__wether">
-    // //       <h3>-7</h3>
-    // //       <h3>16tc</h3>
-    // //       <h3>120</h3>
-    // //     </div>
-    // // </div>
-    // <div class="shedule__content">
-    //   <div class="shedule__table arr">
-    //     <table class="table table__arr">
-    //       <caption>
-    //         Arrival
-    //       </caption>
-    //       <thead>
-    //         <tr>
-    //           <td>Time</td>
-    //           <td>Flight</td>
-    //           <td>From</td>
-    //           <td>Aircraft</td>
-    //           <td>Status</td>
-    //         </tr>
-    //       </thead>
-    //       <tbody>
-
-    //       </tbody>
-    //     </table>
-    //   </div>
-    //   <div class="dep">
-    //     <table class="table table__dep">
-    //       <caption>
-    //         Departures
-    //       </caption>
-    //       <thead>
-    //         <tr>
-    //           <td>Time</td>
-    //           <td>Flight</td>
-    //           <td>To</td>
-    //           <td>Aircraft</td>
-    //           <td>Status</td>
-    //         </tr>
-    //       </thead>
-    //       <tbody>
-
-    //       </tbody>
-    //     </table>
-    //   </div>
-    // </div>
-    //   `;
     return shedule;
   }
 }
