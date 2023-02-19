@@ -27,7 +27,7 @@ export const User = sequelize.define<UserModel>('user', {
 export const Setting = sequelize.define<SettingModel>('setting', {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
   mapType: { type: DataTypes.INTEGER, defaultValue: 0 },
-  geoPos: { type: DataTypes.STRING, defaultValue: '59.93413595579978, 30.340987379107066' },
+  geoPos: { type: DataTypes.STRING, defaultValue: 'ULLI' },
   userId: { type: DataTypes.INTEGER },
 });
 

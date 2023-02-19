@@ -37,8 +37,7 @@ export default class FligtCore {
       iconSize: [50, 50],
     });
 
-    const interval = setInterval(() => {
-      const time = Math.ceil(new Date().getTime() / 6000);
+    setInterval(() => {
       this.mappingFlyght(planeIcon, planeIconA);
       console.log(this.cnt++);
     }, 5000);
@@ -48,7 +47,6 @@ export default class FligtCore {
     // 1 Запрос данных о самолетах на сервер
     const res = await fetch(
       `https://opensky-network.org/api/states/all?lamin=53.7519&lomin=22.0571&lamax=66.4454&lomax=40.4963`,
-      // `https://opensky-network.org/api/states/all?lamin=53.7519&lomin=22.0571&lamax=66.4454&lomax=40.4963`,
       {
         headers: {
           Authorization: `Basic ${constains.OPENSKY_KEY}`,
@@ -218,12 +216,7 @@ export default class FligtCore {
     return popUp;
   }
 
-  // [[1675195136, 66.2102, 25.7564, 4267, 182, false], [1675195136, 66.2102, 25.7564, 4267, 182, false]]
-
   async aircraftPath(icao: string) {
-    const timeEnd = Math.ceil(Date.now() / 1000);
-    const timeBegin = timeEnd - 129600;
-    // const res = await fetch(`https://opensky-network.org/api/flights/aircraft?icao24=${icao.toString().trim().toLowerCase()}&begin=${timeBegin}&end=${timeEnd}` , {
     const res = await fetch(
       `https://opensky-network.org/api/tracks/all?icao24=${icao
         .toString()

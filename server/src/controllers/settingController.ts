@@ -4,11 +4,12 @@ import { Setting } from '../models/models';
 class SettingController {
   async set(req: express.Request, res: express.Response) {
     const { id } = req.params;
-    const { mapType } = req.body;
+    const { mapType, pos } = req.body;
     console.log('!', req.body);
     const setting = await Setting.update(
       {
         mapType: mapType,
+        geoPos: pos,
       },
       {
         where: { userId: id },
