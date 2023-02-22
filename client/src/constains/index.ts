@@ -1,4 +1,4 @@
 export default {
-  URL: 'http://127.0.0.1:3000/api',
+  URL: 'https://flightradarclone-production.up.railway.app/api',
   OPENSKY_KEY: 'RXJtYWtvdjpFcm1ha292MjIwOA==',
 };
